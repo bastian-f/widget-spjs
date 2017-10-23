@@ -1992,7 +1992,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     
                     // create available algorithms dropdown
                     var availArgsHtml = "";
-                    if ('AvailableBufferAlgorithms' in item) {
+                /*    if ('AvailableBufferAlgorithms' in item) {
                         // we are on a version of the server that gives us this
                         availArgsHtml = "<td><select id=\"" + i + "Buffer\" class=\"com-chilipeppr-widget-serialport-buffer\" class=\"form-control\">";
                         //availArgsHtml += "<option></option>"
@@ -2003,7 +2003,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         availArgsHtml += "</select>" + 
                             //"</td>" + 
                             "";
-                    }
+                    }*/
                     
                     // check if we have meta data for this serial port device
                     // we can do this by checking vid/pid or a regexp on Friendly name
