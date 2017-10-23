@@ -1992,7 +1992,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     
                     // create available algorithms dropdown
                     var availArgsHtml = "";
-                /*    if ('AvailableBufferAlgorithms' in item) {
+                    if ('AvailableBufferAlgorithms' in item) {
                         // we are on a version of the server that gives us this
                         availArgsHtml = "<td><select id=\"" + i + "Buffer\" class=\"com-chilipeppr-widget-serialport-buffer\" class=\"form-control\">";
                         //availArgsHtml += "<option></option>"
@@ -2003,7 +2003,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         availArgsHtml += "</select>" + 
                             //"</td>" + 
                             "";
-                    }*/
+                    }
                     
                     // check if we have meta data for this serial port device
                     // we can do this by checking vid/pid or a regexp on Friendly name
@@ -2097,7 +2097,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         "</span></button>" + 
                         "<button id=\"" + i + "SetDefault\" class=\"btn btn-xs btn-default btn-bottom com-chilipeppr-serialport-setDefaultBtn\" data-toggle=\"popover\" data-placement=\"auto\" data-container=\"body\" data-content=\"Manually set this port to the default port (green).\" data-trigger=\"hover\"><span class=\"glyphicon glyphicon-ok\"></span></button>" +  
                         "</div>" +
-                        "</td>" +  
+                        "</td>" +
                         
                         "</tr>";
                     if ('IsOpen' in item && item.IsOpen == true)
