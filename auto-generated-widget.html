@@ -2287,12 +2287,12 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     else
                         imgTag = " style=\"width:0;\" ";
 
-                    console.error(i);
+                    console.error("item friendly: " + item.Friendly);
                     var row = "<tr id=\"" + i + "Row\" class=\"" + rowClass + "\"><td  style=\"cursor:pointer;\">" +
                         "<input id=\"" + i + "Cb\" type=\"checkbox\" style=\"cursor:pointer;\"/> <span class=\"glyphicon glyphicon-exclamation-sign text-danger hidden\" data-toggle=\"tooltip\" data-placement=\"auto\"></span>" +
                         "</td><td id=\"" + i + "Img\" class=\"deviceImgTd\" style=\"cursor:pointer;\"><img class=\"deviceimg\" " + imgTag + " /></td>" +
-                      //  "</td><td id=\"" + i + "Friendly\" style=\"cursor:pointer;\">" + item.Friendly + "</td>" +
-                        availArgsHtml +
+                        "</td><td id=\"" + i + "Friendly\" style=\"cursor:pointer;\">" + item.Friendly + "</td>" +
+                       // availArgsHtml +
                         //"<td>" + 
                         //"<br>" +
                        /* "<select id=\"" + i + "Baud\" class=\"com-chilipeppr-widget-serialport-baud\" class=\"form-control\">" +
