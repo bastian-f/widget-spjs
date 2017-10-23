@@ -281,7 +281,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             	if ('isSingleSelectMode' in opt) this.setSingleSelectMode();
               if ('defaultBuffer' in opt) buffertype = opt.defaultBuffer;
               if ('defaultBaud' in opt) defaultBaud = opt.defaultBaud;
-              if ('bufferEncouragementMsg' in opt) buffertypeDescription = opt.bufferEncouragementMsg;
+           //   if ('bufferEncouragementMsg' in opt) buffertypeDescription = opt.bufferEncouragementMsg;
             }
             
             if (buffertype != null && buffertype.length > 0) {
@@ -293,7 +293,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     mydescription = buffertypeDescription;
                 }
                 // also add extra msg to encourage the buffer choice
-                $('.com-chilipeppr-widget-serialport-bufferindicator').removeClass("hidden").find('.buffername').text(mydescription);
+             //   $('.com-chilipeppr-widget-serialport-bufferindicator').removeClass("hidden").find('.buffername').text(mydescription);
                 
                 // set the buffer encouragement to be the full passed in
                 // description if the caller called us with the new defaultOptions
@@ -620,10 +620,10 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     }
                 });
                 
-                if (isAnythingConnectedWithTheBufferWeWant)
+           //     if (isAnythingConnectedWithTheBufferWeWant)
                     this.hideBufferEncouragement();
-                else
-                    this.showBufferEncouragement();
+            //    else
+              //      this.showBufferEncouragement();
             }
         },
         publishSingleSelectPort: function() {
