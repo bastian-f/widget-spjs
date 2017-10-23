@@ -2890,7 +2890,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
     <div id="com-chilipeppr-widget-serialport" class="panel panel-default com-chilipeppr-widget-serialport">
         <div class="panel-heading">
 
-            <div class="btn-group pull-right">
+     <!--       <div class="btn-group pull-right">
                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span>
 
                 </button>
@@ -2898,45 +2898,48 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     <li class=""><a href="javascript:" id="com-chilipeppr-widget-serialport-tbar-disconws">Connect to Alternate Host/IP</a></li>
                     <li><a href="javascript:" id="com-chilipeppr-widget-serialport-tbar-showhideconsole">Show / Hide Console</a></li>
                     <!-- <li><a href="javascript:" id="com-chilipeppr-widget-serialport-tbar-showhidestatus">Show / Hide Status</a></li> -->
-                    <li class="divider"></li>
+         <!--           <li class="divider"></li>
                     <li class="hidden"><a href="javascript:" id="com-chilipeppr-widget-serialport-tbar-disconws">Disconnect</a></li>
                     <li><a href="javascript:" id="com-chilipeppr-widget-serialport-tbar-reconws">Reconnect</a></li>
                     <li class="hidden"><a href="javascript:" id="com-chilipeppr-widget-serialport-tbar-refresh">Refresh Serial Port List</a></li>
-
+            -->
                     <!-- <li class="divider"></li>
                     <li role="presentation" class="dropdown-header fork-name"></li>
                     <li><a href="" class="standalone" target="_blank">View Widget Standalone</a></li>
                     <li><a href="" class="fork" target="_blank">Fork Widget</a></li> -->
-                </ul>
-            </div>
-            <div class="btn-group pull-right" style="padding-right:4px;">
-                <button type="button" class="btn btn-xs btn-default hidebody"><span class="glyphicon glyphicon-chevron-up"></span></button>
-            </div>
 
-            <div class="btn-group pull-right hidden" style="padding-right:4px;">
-                <button type="button" class="btn btn-xs btn-default spjs-restart" data-toggle="popover" data-placement="auto" data-container="body" data-content="Restart the Serial Port JSON Server by killing its process on the server and restarting it from scratch. This button sends the command 'restart' to SPJS."
-                data-trigger="hover"><span class="glyphicon glyphicon-retweet" style="color:red;"></span></button>
-            </div>
 
-            <div class="btn-group pull-right" style="padding-right:4px;">
-                <button type="button" class="btn btn-xs btn-default refresh" data-toggle="popover" data-placement="auto" data-container="body" data-content="Reload serial port list from Serial Port JSON Server. This button sends the command 'list' to SPJS." data-trigger="hover"><span class="glyphicon glyphicon-refresh"></span></button>
-                <button type="button" class="btn btn-xs btn-default disconnect" data-toggle="popover" data-placement="auto" data-container="body" data-content="Disconnect from Serial Port JSON Server" data-trigger="hover"><span class="glyphicon glyphicon-remove-sign"></span></button>
-            </div>
-            <div class="title" style="">
-                <span class="panel-title">Serial Port JSON Server 
-                <span class="serial-port-version"></span>
-                <div class="subtitle hidden">Multi Port Mode</div>
-                <div class="hosttitle"></div>
-                <span class="spjs-notconnectedwarning alert-danger" xstyle="font-size:9px">Disconnected</span>
-                </span>
+            <!--      </ul>
+             </div>    -->
 
-            </div>
-        </div>
-        <div class="panel-body com-chilipeppr-widget-serialport-body">
+             <div class="btn-group pull-right" style="padding-right:4px;">
+                 <button type="button" class="btn btn-xs btn-default hidebody"><span class="glyphicon glyphicon-chevron-up"></span></button>
+             </div>
 
-            <div class="container-fluid">
+             <div class="btn-group pull-right hidden" style="padding-right:4px;">
+                 <button type="button" class="btn btn-xs btn-default spjs-restart" data-toggle="popover" data-placement="auto" data-container="body" data-content="Restart the Serial Port JSON Server by killing its process on the server and restarting it from scratch. This button sends the command 'restart' to SPJS."
+                 data-trigger="hover"><span class="glyphicon glyphicon-retweet" style="color:red;"></span></button>
+             </div>
 
-                <!-- Nav tabs -->
+             <div class="btn-group pull-right" style="padding-right:4px;">
+                 <button type="button" class="btn btn-xs btn-default refresh" data-toggle="popover" data-placement="auto" data-container="body" data-content="Reload serial port list from Serial Port JSON Server. This button sends the command 'list' to SPJS." data-trigger="hover"><span class="glyphicon glyphicon-refresh"></span></button>
+                 <button type="button" class="btn btn-xs btn-default disconnect" data-toggle="popover" data-placement="auto" data-container="body" data-content="Disconnect from Serial Port JSON Server" data-trigger="hover"><span class="glyphicon glyphicon-remove-sign"></span></button>
+             </div>
+             <div class="title" style="">
+                 <span class="panel-title">Serial Port JSON Server
+                 <span class="serial-port-version"></span>
+                 <div class="subtitle hidden">Multi Port Mode</div>
+                 <div class="hosttitle"></div>
+                 <span class="spjs-notconnectedwarning alert-danger" xstyle="font-size:9px">Disconnected</span>
+                 </span>
+
+             </div>
+         </div>
+         <div class="panel-body com-chilipeppr-widget-serialport-body">
+
+             <div class="container-fluid">
+
+                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="xactive"><a href="#com-chilipeppr-widget-serialport-portstab" aria-controls="com-chilipeppr-widget-serialport-portstab" role="tab" data-toggle="tab">Port List</a></li>
                     <li role="presentation" class="active"><a href="#com-chilipeppr-widget-serialport-yours" aria-controls="com-chilipeppr-widget-serialport-yours" role="tab" data-toggle="tab">Your Servers</a></li>
