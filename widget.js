@@ -276,7 +276,8 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
               var opt = host;
               
               this.defaultOptions = opt;
-            	if ('isSingleSelectMode' in opt) this.setSingleSelectMode();
+            //	if ('isSingleSelectMode' in opt) this.setSingleSelectMode();
+                this.setSingleSelectMode();
               if ('defaultBuffer' in opt) buffertype = opt.defaultBuffer;
               if ('defaultBaud' in opt) defaultBaud = opt.defaultBaud;
               if ('bufferEncouragementMsg' in opt) buffertypeDescription = opt.bufferEncouragementMsg;
