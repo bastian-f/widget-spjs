@@ -320,7 +320,11 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             this.statusWatcher();
             this.wsConnect(null);
             //this.wsConnect(null, host);
-            
+
+            this.defaultBaud = 115200;
+            console.error("SETTING SINGLE SELECT!");
+            this.setSingleSelectMode();
+
             // allow dedupe mode
             var that = this;
             chilipeppr.subscribe("/" + this.id + "/dedupeOn", this, function (msg) {
