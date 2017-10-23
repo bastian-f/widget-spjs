@@ -239,7 +239,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         host: null,
         portlist: null,
         conn: null,     // the websocket we're connected to (eventually make this an array so we can have multiple websockets)
-        isSingleSelectMode: false,  // means you can multiple open ports, or only open one
+        isSingleSelectMode: true,  // means you can multiple open ports, or only open one
         singleSelectPort: null,     // this will get set to the last port opened based on cookie or click
         buffertype: null, // holds what buffertype to request on the "open comPort baud buffertype" command, if null we just don't send
         defaultBaud: null, // holds default baud to put in the pulldown menu
