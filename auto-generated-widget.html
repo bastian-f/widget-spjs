@@ -509,11 +509,11 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // set the buffer encouragement to be the full passed in
                 // description if the caller called us with the new defaultOptions
                 // value
-                if (this.defaultOptions && 'bufferEncouragementMsg' in this.defaultOptions) {
+            /*    if (this.defaultOptions && 'bufferEncouragementMsg' in this.defaultOptions) {
                   $('.com-chilipeppr-widget-serialport-bufferindicator').text(
                     this.defaultOptions.bufferEncouragementMsg
                   );
-                }
+                }*/
 
                 // Cheating a bit here, bu this seems to be the new std
                 // default baud rate out there
