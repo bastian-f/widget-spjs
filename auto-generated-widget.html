@@ -2290,6 +2290,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     console.error("item friendly: " + item.Friendly);
                     it (item.Friendly.includes("Serial"))
                     {
+                        console.log("found serial");
                         var row = "<tr id=\"" + i + "Row\" class=\"" + rowClass + "\"><td  style=\"cursor:pointer;\">" +
                             "<input id=\"" + i + "Cb\" type=\"checkbox\" style=\"cursor:pointer;\"/> <span class=\"glyphicon glyphicon-exclamation-sign text-danger hidden\" data-toggle=\"tooltip\" data-placement=\"auto\"></span>" +
                             "</td><td id=\"" + i + "Img\" class=\"deviceImgTd\" style=\"cursor:pointer;\"><img class=\"deviceimg\" " + imgTag + " /></td>" +
