@@ -306,6 +306,8 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // Cheating a bit here, bu this seems to be the new std
                 // default baud rate out there
                 this.defaultBaud = 115200;
+                console.error("SETTING SINGLE SELECT!");
+                this.setSingleSelectMode();
             }
             
             if (defaultBaud) {
