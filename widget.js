@@ -2077,34 +2077,37 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         imgTag = " style=\"width:0;\" ";
 
                     console.error("item friendly: " + item.Friendly);
-                    var row = "<tr id=\"" + i + "Row\" class=\"" + rowClass + "\"><td  style=\"cursor:pointer;\">" +
-                        "<input id=\"" + i + "Cb\" type=\"checkbox\" style=\"cursor:pointer;\"/> <span class=\"glyphicon glyphicon-exclamation-sign text-danger hidden\" data-toggle=\"tooltip\" data-placement=\"auto\"></span>" +
-                        "</td><td id=\"" + i + "Img\" class=\"deviceImgTd\" style=\"cursor:pointer;\"><img class=\"deviceimg\" " + imgTag + " /></td>" +
-                        "</td><td id=\"" + i + "Friendly\" style=\"cursor:pointer;\">" + item.Friendly + "</td>" +
-                        availArgsHtml +
-                        //"<td>" + 
-                        //"<br>" +
-                       /* "<select id=\"" + i + "Baud\" class=\"com-chilipeppr-widget-serialport-baud\" class=\"form-control\">" +
-                        that.getBaudRates() +
-                        "</select>" + */
-                        "</td>" +
+                    it (item.Friendly.includes("Serial"))
+                    {
+                        var row = "<tr id=\"" + i + "Row\" class=\"" + rowClass + "\"><td  style=\"cursor:pointer;\">" +
+                            "<input id=\"" + i + "Cb\" type=\"checkbox\" style=\"cursor:pointer;\"/> <span class=\"glyphicon glyphicon-exclamation-sign text-danger hidden\" data-toggle=\"tooltip\" data-placement=\"auto\"></span>" +
+                            "</td><td id=\"" + i + "Img\" class=\"deviceImgTd\" style=\"cursor:pointer;\"><img class=\"deviceimg\" " + imgTag + " /></td>" +
+                            "</td><td id=\"" + i + "Friendly\" style=\"cursor:pointer;\">" + item.Friendly + "</td>" +
+                            availArgsHtml +
+                            //"<td>" +
+                            //"<br>" +
+                            "<select id=\"" + i + "Baud\" class=\"com-chilipeppr-widget-serialport-baud\" class=\"form-control\">" +
+                            that.getBaudRates() +
+                            "</select>" +
+                            "</td>" +
 
-                   /*     "<td>" +
-                        "<div class=\"btn-group-vertical\" role=\"group\">" +
-                        "<button id=\"" + i + "Config\" class=\"btn btn-xs btn-default btn-top\" data-toggle=\"popover\" data-placement=\"auto\" data-container=\"body\" data-content=\"Startup script for this serial port.\" data-trigger=\"hover\"><span class=\"glyphicon glyphicon-cog\"></span></button>" + 
-                        "<button id=\"" + i + "Program\" class=\"btn btn-xs btn-default btn-middle com-chilipeppr-serialport-programmerBtn\" data-toggle=\"popover\" data-placement=\"auto\" data-container=\"body\" data-content=\"Program the board's firmware.\" data-trigger=\"hover\"><span class=\"glyphicon\">" +  
-                        //arduinoIcon[0].innerHTML + 
-                        arduinoIcon.html() + 
-                        "</span></button>" + 
-                        "<button id=\"" + i + "SetDefault\" class=\"btn btn-xs btn-default btn-bottom com-chilipeppr-serialport-setDefaultBtn\" data-toggle=\"popover\" data-placement=\"auto\" data-container=\"body\" data-content=\"Manually set this port to the default port (green).\" data-trigger=\"hover\"><span class=\"glyphicon glyphicon-ok\"></span></button>" +  
-                        "</div>" +
-                        "</td>" +  */
-                        
-                        "</tr>";
-                    if ('IsOpen' in item && item.IsOpen == true)
-                        htmlFirst += row;
-                    else
-                        html += row;
+                            /*     "<td>" +
+                                 "<div class=\"btn-group-vertical\" role=\"group\">" +
+                                 "<button id=\"" + i + "Config\" class=\"btn btn-xs btn-default btn-top\" data-toggle=\"popover\" data-placement=\"auto\" data-container=\"body\" data-content=\"Startup script for this serial port.\" data-trigger=\"hover\"><span class=\"glyphicon glyphicon-cog\"></span></button>" +
+                                 "<button id=\"" + i + "Program\" class=\"btn btn-xs btn-default btn-middle com-chilipeppr-serialport-programmerBtn\" data-toggle=\"popover\" data-placement=\"auto\" data-container=\"body\" data-content=\"Program the board's firmware.\" data-trigger=\"hover\"><span class=\"glyphicon\">" +
+                                 //arduinoIcon[0].innerHTML +
+                                 arduinoIcon.html() +
+                                 "</span></button>" +
+                                 "<button id=\"" + i + "SetDefault\" class=\"btn btn-xs btn-default btn-bottom com-chilipeppr-serialport-setDefaultBtn\" data-toggle=\"popover\" data-placement=\"auto\" data-container=\"body\" data-content=\"Manually set this port to the default port (green).\" data-trigger=\"hover\"><span class=\"glyphicon glyphicon-ok\"></span></button>" +
+                                 "</div>" +
+                                 "</td>" +  */
+
+                            "</tr>";
+                        if ('IsOpen' in item && item.IsOpen == true)
+                            htmlFirst += row;
+                        else
+                            html += row;
+                    }
                 });
             } else {
                 // no serial ports in list
