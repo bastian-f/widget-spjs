@@ -2540,6 +2540,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // open the port
                 // get baud rate picked
                 var baud = $('#' + i + "Baud").val();
+                console.error("BAUD: " + baud);
                 var buffer = $('#' + i + "Buffer").val();
                 that.serialConnect(item.Name, baud, buffer);
                 //that.publishSysMsg("Serial port " + port.Friendly + " opened with baud rate " + baud);
