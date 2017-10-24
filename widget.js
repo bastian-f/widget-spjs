@@ -1602,7 +1602,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     this.onVersion(data.Version);
                 } else if (data && data.Hostname) {
                     //this.onSpjsName(data.Hostname);
-                    onSpjsName("Connected");
+                    this.onSpjsName("Connected");
                 } else if (data && data.P && data.D) {
                     
                     // we got actual raw serial port data
