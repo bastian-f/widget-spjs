@@ -577,6 +577,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             $('.com-chilipeppr-widget-serialport .panel-heading .serial-port-version').text('');
         },
         resetSpjsName: function() {
+            $('.hosttitle').removeClass('hidden');
             $('.com-chilipeppr-widget-serialport .panel-heading .hosttitle').text('');
         },
         onSpjsName: function(spjsName) {
@@ -1303,6 +1304,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         },
         reconMsgShow: function() {
             $('.com-chilipeppr-widget-serialport-disconnected').removeClass('hidden');
+            $('.hosttitle').addClass('hidden');
             // undisable the reconnect btn
             $('.com-chilipeppr-widget-serialport-disconnected .refresh').prop('disabled', false);
         },
