@@ -788,11 +788,12 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             $('.com-chilipeppr-widget-serialport .panel-heading .serial-port-version').text('');
         },
         resetSpjsName: function() {
-            $('.hosttitle').removeClass('hidden');
+
             $('.com-chilipeppr-widget-serialport .panel-heading .hosttitle').text('');
         },
         onSpjsName: function(spjsName) {
             console.error("spjsName: " + spjsName);
+            $('.hosttitle').removeClass('hidden');
             $('.com-chilipeppr-widget-serialport .panel-heading .hosttitle').text(spjsName);
         },
         setupCloudServers: function() {
