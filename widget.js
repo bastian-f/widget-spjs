@@ -720,7 +720,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 that.restartSpjs();
             });
             
-            this.forkSetup();
+          //  this.forkSetup();
 
         },
         restartSpjs: function() {
@@ -2655,7 +2655,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             $('#' + this.id + ' .hidebody span').addClass('glyphicon-chevron-down');
             if (!(evt == null)) localStorage.setItem("/" + this.id + "/body", "hidden");
         },
-        forkSetup: function () {
+       /* forkSetup: function () {
             var topCssSelector = '.com-chilipeppr-widget-serialport';
             //$(topCssSelector + ' .fork').prop('href', this.fiddleurl);
             //$(topCssSelector + ' .standalone').prop('href', this.url);
@@ -2680,7 +2680,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 });
             });
 
-        },
+        },  */
 
     }
 });
