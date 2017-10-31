@@ -5,6 +5,7 @@
 
 var BAUDRATE = 115200;
 
+
 requirejs.config({
     /*
     Dependencies can be defined here. ChiliPeppr uses require.js so
@@ -2566,6 +2567,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             console.error(elem);
             $( "#reprog").removeClass('disabled');
             elem.classlist.remove('disabled');
+            elem.removeClass('disabled');
 
         },
         bufferAlgorithms: null,
