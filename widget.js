@@ -2564,6 +2564,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             var elem = document.getElementsByClassName('btn-reprogram')
             console.error('elem');
             console.error(elem);
+            $( "#reprog").removeClass('disabled');
             elem.classlist.remove('disabled');
 
         },
