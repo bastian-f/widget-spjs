@@ -2208,6 +2208,9 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     if (that.isInitting) {
                         chilipeppr.publish("/com-chilipeppr-widget-serialport/onportopen", item);
                     }
+                    $( "#reprog").removeClass('disabled');
+
+
                 }
                 
                 // set default buffer based on what was set (if anything) in this.bufferType
