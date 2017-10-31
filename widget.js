@@ -2555,19 +2555,22 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 var buffer = $('#' + i + "Buffer").val();
                 that.serialConnect(item.Name, baud, buffer);
                 //that.publishSysMsg("Serial port " + port.Friendly + " opened with baud rate " + baud);
+                var elem = document.getElementsByClassName('btn-reprogram')
+                console.error('elem');
+                console.error(elem);
+                $( "#reprog").removeClass('disabled');
+                elem.classlist.remove('disabled');
+                elem.removeClass('disabled');
+
             } else {
                 // close the port
                 $('#' + i + "Buffer").prop("disabled", false);
 
                 that.serialDisconnect(item.Name);
                 //that.publishSysMsg("Serial port " + port.Friendly + " closed");
+                $( "#reprog").addClass('disabled') 
             }
-            var elem = document.getElementsByClassName('btn-reprogram')
-            console.error('elem');
-            console.error(elem);
-            $( "#reprog").removeClass('disabled');
-            elem.classlist.remove('disabled');
-            elem.removeClass('disabled');
+
 
         },
         bufferAlgorithms: null,
