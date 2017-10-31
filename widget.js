@@ -2561,6 +2561,9 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 that.serialDisconnect(item.Name);
                 //that.publishSysMsg("Serial port " + port.Friendly + " closed");
             }
+            var elem = document.getElementById("reprog");
+            elem.classlist.remove('disabled');
+
         },
         bufferAlgorithms: null,
         getBufferAlgorithms: function() {
