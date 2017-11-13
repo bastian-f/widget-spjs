@@ -2420,7 +2420,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         chilipeppr.publish("/com-chilipeppr-widget-serialport/onportopen", item);
                     }
                     $( "#reprog").removeClass('disabled');
-                    $( "#statustext").innerHTML("Status: Ready");
+                    $( "#statustext").html("Status: Ready");
 
 
                 }
@@ -2774,7 +2774,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 //console.error('elem');
                 //console.error(elem);
                 $( "#reprog").removeClass('disabled');
-                $( "#statustext").innerHTML("Status: Ready");
+                $( "#statustext").html("Status: Ready");
                 //elem.classlist.remove('disabled');
                 //elem.removeClass('disabled');
 
@@ -2785,7 +2785,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 that.serialDisconnect(item.Name);
                 //that.publishSysMsg("Serial port " + port.Friendly + " closed");
                 $( "#reprog").addClass('disabled')
-                $( "#statustext").innerHTML("Status: Idle");
+                $( "#statustext").html("Status: Idle");
             }
 
 
