@@ -2210,6 +2210,8 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     }
                     $( "#reprog").removeClass('disabled');
                     $( "#statustext").html("Status: Ready");
+                    $( "#statustext").removeClass("alert-info");
+                    $( "#statustext").addClass("alert-success");
 
 
                 }
@@ -2564,6 +2566,8 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 //console.error(elem);
                 $( "#reprog").removeClass('disabled');
                 $( "#statustext").html("Status: Ready");
+                $( "#statustext").removeClass("alert-info");
+                $( "#statustext").addClass("alert-success");
                 //elem.classlist.remove('disabled');
                 //elem.removeClass('disabled');
 
@@ -2575,6 +2579,8 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 //that.publishSysMsg("Serial port " + port.Friendly + " closed");
                 $( "#reprog").addClass('disabled')
                 $( "#statustext").html("Status: Idle");
+                $( "#statustext").removeClass("alert-success");
+                $( "#statustext").addClass("alert-info");
             }
 
 
