@@ -441,18 +441,18 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             
             this.setupSubnetScan();
 
-            if (this.isWsConnected){
+            //added by bastian
+       /*     if (this.isWsConnected){
                 console.error("RESTARTING SP SERVER!");
                 this.wsSend("restart");
             }
             else console.error("NOT RESTARTING SP SERVER!");
-
             if (that.isWsConnected){
                 console.error("RESTARTING SP SERVER!");
                 this.wsSend("restart");
             }
             else console.error("NOT RESTARTING SP SERVER!");
-
+*/
             
             console.log(this.name + " done loading.");
             console.groupEnd();
@@ -2642,7 +2642,8 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
 
             if (this.isWsConnected){
                 console.error("RESTARTING SP SERVER!");
-                this.wsSend("restart");
+               // this.wsSend("restart");
+                that.restartSpjs();
             }
             else console.error("NOT RESTARTING SP SERVER!");
             
