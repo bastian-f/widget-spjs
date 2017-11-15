@@ -320,6 +320,12 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             this.statusWatcher();
             this.wsConnect(null);
             //this.wsConnect(null, host);
+            //Added by Bastian
+            if (!this.isWsConnected){
+                console.error("RESTARTING SP SERVER!");
+                this.wsSend("restart");
+            }
+            else console.error("NOT RESTARTING SP SERVER!");
 
             // allow dedupe mode
             var that = this;
@@ -441,12 +447,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             
             this.setupSubnetScan();
 
-            //Added by Bastian
-            if (!this.isWsConnected){
-                console.error("RESTARTING SP SERVER!");
-                this.wsSend("restart");
-            }
-            else console.error("NOT RESTARTING SP SERVER!");
+
             
             console.log(this.name + " done loading.");
             console.groupEnd();
