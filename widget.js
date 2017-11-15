@@ -1877,10 +1877,10 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // },
             "nodemcu" : {
                 vidpids: [{vid:"10c4", pid:"ea60"}],
-                name: "NodeMCU / CP2102",
+                name: "K-PROX",
                 buffer: "nodemcu",
                 baud: "115200",
-                img: "https://github.com/chilipeppr/workspace-nodemcu/raw/master/nodemcu.jpg"
+                img: "img/Kprox.png"
             }
         },
         setPortItemsFromMetaData: function(dm /*device meta*/, item /*port*/, portlistIndex) {
