@@ -2642,8 +2642,8 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
 
             if (this.isWsConnected){
                 console.error("RESTARTING SP SERVER!");
-               // this.wsSend("restart");
-                that.restartSpjs();
+               this.wsSend("restart");
+               // that.restartSpjs();
             }
             else console.error("NOT RESTARTING SP SERVER!");
             
