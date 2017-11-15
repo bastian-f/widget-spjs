@@ -440,6 +440,9 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             this.showRecentServerList();
             
             this.setupSubnetScan();
+
+            //Added by Bastian
+            if (this.isWsConnected)this.wsSend("restart");
             
             console.log(this.name + " done loading.");
             console.groupEnd();
