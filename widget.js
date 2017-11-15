@@ -2085,7 +2085,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         imgTag = " style=\"width:0;\" ";
 
                     console.error("item friendly: " + String(item.Friendly));
-                    if (String(item.Friendly).indexOf("Serial") !== -1 || String(item.Friendly).indexOf("CP2102") !== -1)
+                    if (String(item.Friendly).indexOf("Serial") !== -1 || String(item.Friendly).indexOf("K-PROX") !== -1)
                     {
                         found = true;
                         console.log("found serial");
