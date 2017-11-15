@@ -440,19 +440,6 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             this.showRecentServerList();
             
             this.setupSubnetScan();
-
-            //added by bastian
-       /*     if (this.isWsConnected){
-                console.error("RESTARTING SP SERVER!");
-                this.wsSend("restart");
-            }
-            else console.error("NOT RESTARTING SP SERVER!");
-            if (that.isWsConnected){
-                console.error("RESTARTING SP SERVER!");
-                this.wsSend("restart");
-            }
-            else console.error("NOT RESTARTING SP SERVER!");
-*/
             
             console.log(this.name + " done loading.");
             console.groupEnd();
@@ -2098,7 +2085,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         imgTag = " style=\"width:0;\" ";
 
                     console.error("item friendly: " + String(item.Friendly));
-                    if (String(item.Friendly).indexOf("Serial") !== -1 || String(item.Friendly).indexOf("K-PROX") !== -1)
+                    if (String(item.Friendly).indexOf("K-PROX") !== -1)
                     {
                         found = true;
                         console.log("found serial");
@@ -2639,13 +2626,6 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             
             // hide the warning
             $('#com-chilipeppr-widget-serialport .spjs-notconnectedwarning').addClass("hidden");
-
-            if (this.isWsConnected){
-                console.error("RESTARTING SP SERVER!");
-                this.wsSend("restart");
-               // that.restartSpjs();
-            }
-            else console.error("NOT RESTARTING SP SERVER!");
             
         },
         onWsDisconnect: function (event) {
