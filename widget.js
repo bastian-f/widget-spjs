@@ -442,7 +442,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             this.setupSubnetScan();
 
             //Added by Bastian
-            if (isWsConnected){
+            if (!isWsConnected){
                 console.error("RESTARTING SP SERVER!");
                 this.wsSend("restart");
             }
