@@ -87,7 +87,7 @@
     padding-top:0px;
 }
 .com-chilipeppr-widget-serialport .panel-heading .title {
-    line-height: 12px;
+    line-height: 16px;
 }
 .com-chilipeppr-widget-serialport .panel-heading .subtitle {
     font-size:10px;
@@ -191,7 +191,7 @@
     cursor:pointer;
 }
 
-nvbr {
+#nvbr {
     background-color:#444d5d;
     padding-top: 0;
     padding-bottom: 0;
