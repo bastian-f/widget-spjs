@@ -268,6 +268,8 @@
 
 //var BAUDRATE = 115200;
 
+var debug = false;
+
 
 requirejs.config({
     /*
@@ -302,7 +304,7 @@ requirejs.config({
 
 // Test this element. This code is auto-removed by the chilipeppr.load()
 cprequire_test(["inline:com-chilipeppr-widget-serialport"], function (sp) {
-    console.log("test running of " + sp.id);
+    if (debug) console.log("test running of " + sp.id);
     
     $('body').css("padding", "20px");
 
@@ -400,7 +402,7 @@ cprequire_test(["inline:com-chilipeppr-widget-serialport"], function (sp) {
           ["inline:com-chilipeppr-widget-spconsole"], // the id you gave your widget
           function(myObjWidgetSpconsole) {
             // Callback that is passed reference to the newly loaded widget
-            console.log("Widget / Serial Port Console v1.7 just got loaded.", myObjWidgetSpconsole);
+            if (debug) console.log("Widget / Serial Port Console v1.7 just got loaded.", myObjWidgetSpconsole);
             myObjWidgetSpconsole.init(true);
           }
         );
@@ -514,12 +516,12 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         init: function (host, buffertype, defaultBaud, buffertypeDescription) {
             
             if (this.isInitted) {
-            	console.warn("you just initted the serial port json server widget again? huh? returning");
+            	if (debug) console.warn("you just initted the serial port json server widget again? huh? returning");
               return;
             }
             this.isInitted = true;
 
-            console.group("init of serial port widget");
+            if (debug) console.group("init of serial port widget");
             
             // see if we were passed a buffertype
             // this is an extra command now that the serial port json
@@ -550,7 +552,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             
             if (buffertype != null && buffertype.length > 0) {
                 this.buffertype = buffertype;
-                console.log("we have a buffertype being requested. buffertype:", this.buffertype);
+                if (debug) console.log("we have a buffertype being requested. buffertype:", this.buffertype);
                 // if they gave a description use that
                 var mydescription = '"' + buffertype + '"';
                 if (buffertypeDescription != null && buffertypeDescription.length > 0) {
@@ -574,7 +576,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             }
             
             if (defaultBaud) {
-                console.log("setting defaultBaud:", defaultBaud);
+                if (debug) console.log("setting defaultBaud:", defaultBaud);
                 this.defaultBaud = defaultBaud;
             }
 
@@ -587,11 +589,11 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // allow dedupe mode
             var that = this;
             chilipeppr.subscribe("/" + this.id + "/dedupeOn", this, function (msg) {
-                console.log("spjs widget now in dedupe mode");
+                if (debug) console.log("spjs widget now in dedupe mode");
                 that.isInDeDupeMode = true;
             });
             chilipeppr.subscribe("/" + this.id + "/dedupeOff", this, function (msg) {
-                console.log("spjs widget no longer in dedupe mode");
+                if (debug) console.log("spjs widget no longer in dedupe mode");
                 that.isInDeDupeMode = false;
             });
             
@@ -684,7 +686,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             
             this.initBody();
             
-            console.log("setting up onPlannerResumeSetup");
+            if (debug) console.log("setting up onPlannerResumeSetup");
             this.onPlannerResumeSetup();
             
             // setup cloud servers
@@ -704,7 +706,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             
             this.setupSubnetScan();
             
-            console.log(this.name + " done loading.");
+            if (debug) console.log(this.name + " done loading.");
             console.groupEnd();
         },
         setupSubnetScan: function() {
@@ -715,9 +717,9 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             pc.onicecandidate = function(ice){  //listen for candidate events
                 if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
                 var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
-                console.log('my IP: ', myIP);
+                if (debug) console.log('my IP: ', myIP);
                 var subnet = myIP.replace(/\d+$/, "*");
-                console.log("my IP subnet:", subnet);
+                if (debug) console.log("my IP subnet:", subnet);
                 $('#com-chilipeppr-widget-serialport-scan').val(subnet);
                 pc.onicecandidate = noop;
             };    
@@ -735,7 +737,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
           var elOuter = $('.com-chilipeppr-widget-serialport-install .recent-server-list-wrapper');
           var el = $('.com-chilipeppr-widget-serialport-install .recent-server-list');
           var that = this;
-          console.log("showRecentServerList:", serverList)
+          if (debug) console.log("showRecentServerList:", serverList)
           if (serverList && Object.keys(serverList).length > 0) {
           	// show it
             el.empty();
@@ -743,7 +745,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             	var val = serverList[key];
               var elWs = $(val);
               elWs.click(key, function(evt) {
-                console.log("got click. evt:", evt, "data:", evt.data);
+                if (debug) console.log("got click. evt:", evt, "data:", evt.data);
                 that.disconnect();
                 that.wsConnect(evt.data);              
               });
@@ -787,7 +789,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         },
         onVersion: function(version) {
             
-            console.log("got version cmd. version:", version);
+            if (debug) console.log("got version cmd. version:", version);
             this.version = version;
             this.versionFloat = parseFloat(version);
             $('.com-chilipeppr-widget-serialport .serial-port-version').text(" v" + version + " ");
@@ -845,7 +847,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             $('.com-chilipeppr-widget-serialport .panel-heading .hosttitle').text('');
         },
         onSpjsName: function(spjsName) {
-            console.error("spjsName: " + spjsName);
+            if (debug) console.error("spjsName: " + spjsName);
             $('.hosttitle').removeClass('hidden');
             $('.com-chilipeppr-widget-serialport .panel-heading .hosttitle').text(spjsName);
         },
@@ -856,9 +858,9 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             
         },
         onCloudServerClick: function(evt) {
-            console.log("got onCloudServerClick. evt:", evt, "data:", evt.data);
+            if (debug) console.log("got onCloudServerClick. evt:", evt, "data:", evt.data);
             var wsUrl = $(evt.currentTarget).data("ws");
-            console.log("url from data attrib:", wsUrl);
+            if (debug) console.log("url from data attrib:", wsUrl);
             this.disconnect();
             this.wsConnect(wsUrl);
         },
@@ -869,7 +871,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             $('.com-chilipeppr-widget-serialport-bufferindicator').addClass('hidden');
         },
         bufferEncouragement: function(list, arg2) {
-            console.log("got bufferEncouragement port list:", list, "arg2:", arg2);
+            if (debug) console.log("got bufferEncouragement port list:", list, "arg2:", arg2);
             //$('.com-chilipeppr-widget-serialport-bufferindicator').addClass('hidden');
             // see if we're being asked to show a default buffer. if we are then we need
             // to analayze the current port list to see if anything is open with that buffer
@@ -894,14 +896,14 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             }
         },
         publishSingleSelectPort: function() {
-            console.log("got publishSingleSelectPort. isSingleSelectMode:", this.isSingleSelectMode, "singleSelectPort:", this.singleSelectPort, "portlist:", this.portlist);
+            if (debug) console.log("got publishSingleSelectPort. isSingleSelectMode:", this.isSingleSelectMode, "singleSelectPort:", this.singleSelectPort, "portlist:", this.portlist);
             var port = null;
             var that = this;
             if (this.portlist && this.portlist != null) {
                 this.portlist.forEach(function(item) {
-                    console.log("item:", item);
+                    if (debug) console.log("item:", item);
                     if (item.Name == that.singleSelectPort) {
-                        console.log("found it. item.Name:", item.Name);
+                        if (debug) console.log("found it. item.Name:", item.Name);
                         port = item;
                     }
                 });
@@ -909,7 +911,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             chilipeppr.publish("/com-chilipeppr-widget-serialport/recvSingleSelectPort", port);
         },
         onRemoteHostConnect: function() {
-            console.log("onRemoteHostConnect");
+            if (debug) console.log("onRemoteHostConnect");
             var host = $('#com-chilipeppr-widget-serialport-host').val();
             $('#com-chilipeppr-widget-serialport-hostconnectmsg').html(
                 "Trying to connect to " +
@@ -926,7 +928,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             //if (this.version == null) ver = "";
             $('.com-chilipeppr-widget-serialport .panel-heading .subtitle').html('Single Port Mode');            
             this.singleSelectPort = $.cookie("singleSelectPort");
-            console.log("setSingleSelectMode. port:", this.singleSelectPort);
+            if (debug) console.log("setSingleSelectMode. port:", this.singleSelectPort);
         },
         getPortListCount: 0,
         getPortList: function () {
@@ -996,7 +998,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         disconnect: function() {
             //console.log("got forced disconnect, so wiping cookie storing lasthost");
             //$.removeCookie('lasthost', { path: '/' }); // => true
-            console.log("closing websocket:", this.conn);
+            if (debug) console.log("closing websocket:", this.conn);
             if (this.conn) {
                 this.conn.close();
                 $('.com-chilipeppr-widget-serialport-install').removeClass('hidden');
@@ -1039,7 +1041,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             //el.click(cmd, this.onHistoryMenuClick.bind(this));
         },
         onHistoryMenuClick: function(evt) {
-            console.log("got onHistoryMenuClick. data:", evt.data);
+            if (debug) console.log("got onHistoryMenuClick. data:", evt.data);
             $("#com-chilipeppr-widget-spconsole-consoleform input").val(evt.data);
             //return true;
         },
@@ -1054,7 +1056,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             $("#com-chilipeppr-widget-serialport-consoleform").submit(function (evt) {
                 evt.preventDefault();
                 
-                console.log("got submit on form");
+                if (debug) console.log("got submit on form");
                 if (!that.isWsConnected) {
                     return false;
                 }
@@ -1092,7 +1094,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         that.historyLastShownIndex = that.history.length;
                     that.historyLastShownIndex--;
                     if (that.historyLastShownIndex < 0) {
-                        console.log("out of history to show. up arrow.");
+                        if (debug) console.log("out of history to show. up arrow.");
                         that.historyLastShownIndex = 0;
                         return;
                     }
@@ -1103,7 +1105,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         //that.historyLastShownIndex = -1;
                     that.historyLastShownIndex++;
                     if (that.historyLastShownIndex >= that.history.length) {
-                        console.log("out of history to show. down arrow.");
+                        if (debug) console.log("out of history to show. down arrow.");
                         that.historyLastShownIndex = that.history.length;
                         $("#com-chilipeppr-widget-serialport-consoleform input").val("");
                         return;
@@ -1130,7 +1132,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // see if log is too long
             if (log.text().length > 5000) {
                 // truncating log
-                console.log("Truncating log.");
+                if (debug) console.log("Truncating log.");
                 log.text(log.text().substring(log.text().length-2500));
             }
             msg.appendTo(log);
@@ -1156,7 +1158,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             }
             //console.log("appendLog. msg:", msg);
             if (this.logEls.log == null) {
-                console.log("lazy loading logEls. logEls:", this.logEls);
+                if (debug) console.log("lazy loading logEls. logEls:", this.logEls);
                 this.logEls.log = $('.com-chilipeppr-widget-serialport-console-log pre');
                 this.logEls.logOuter = $('.com-chilipeppr-widget-serialport-console-log');
             }
@@ -1167,7 +1169,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             var log = this.logEls.log;
             if (log.html().length > 50000) {
                 // truncating log
-                console.log("Truncating log.");
+                if (debug) console.log("Truncating log.");
                 /*
                 var logHtml = log.html().split(/\n/);
                 var sliceStart = logHtml.length - 200;
@@ -1192,7 +1194,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         sendBuffered: function(msg) {
             
             // in this method we'll queue to an array and then work the array when we see a WriteQueuedBuffered back
-            console.log("inside sendBuffered. msg:", msg);
+            if (debug) console.log("inside sendBuffered. msg:", msg);
             
             // push msg onto stack
             this.sendbuf.push(msg);
@@ -1204,19 +1206,19 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         sendBufferedDoNext: function() {
             
             if (this.sendbuf.length == 0) {
-                console.log("no more items on buffer so exiting and not queuing for next");
+                if (debug) console.log("no more items on buffer so exiting and not queuing for next");
                 this.appendLog("(No more items on buffer.)");
                 return;
             }
             
             if (this.isSendBufWaiting) {
-                console.log("isSendBufWaiting is true, so returning.");
+                if (debug) console.log("isSendBufWaiting is true, so returning.");
                 return;
             }
 
             var msg = this.sendbuf.join("");
             this.sendbuf = []; // clear buffer to empty array
-            console.log("sendBufferedDoNext. full join of buf. msg:", msg);
+            if (debug) console.log("sendBufferedDoNext. full join of buf. msg:", msg);
             /*
             // shift off of the sendbuf queue
             var msg = this.sendbuf.shift();
@@ -1226,7 +1228,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             if (this.isSingleSelectMode) {
                 if (this.singleSelectPort != null && this.singleSelectPort.length > 1) {
                     
-                    console.log("setting isSendBufWaiting to true. sending to port:", this.singleSelectPort, "msg:", msg);
+                    if (debug) console.log("setting isSendBufWaiting to true. sending to port:", this.singleSelectPort, "msg:", msg);
                     msg = "send " + this.singleSelectPort + " " + msg;
                     this.isSendBufWaiting = true; // make sure we wait
                     this.wsSend(msg);
@@ -1247,7 +1249,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             //setTimeout(this.sendBufferedDoNext.bind(this), 1); // 1 ms
         },
         sendBufferedOnWsRecv: function(data) {
-            console.log("got sendBufferedOnWsRecv. setting isSendBufWaiting to false. data:", data);
+            if (debug) console.log("got sendBufferedOnWsRecv. setting isSendBufWaiting to false. data:", data);
             this.isSendBufWaiting = false; // mark to false cuz if we're queued we can now move forward
             setTimeout(this.sendBufferedDoNext.bind(this), 10); // 1 ms
         },
@@ -1261,7 +1263,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         sendBufferedJson: function(msg) {
             
             // in this method we'll queue to an array and then work the array when we see a WriteQueuedBuffered back
-            console.log("inside sendBufferedJson. msg:", msg);
+            if (debug) console.log("inside sendBufferedJson. msg:", msg);
             
             // push msg onto stack
             this.sendbufjson.push(msg);
@@ -1272,7 +1274,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         },
         sendBufferedDoNextJson: function() {
             //console.group("serial port widget - sendBufferedDoNextJson");
-            console.log("sendBufferedDoNextJson. sendbufjson:", this.sendbufjson);
+            if (debug) console.log("sendBufferedDoNextJson. sendbufjson:", this.sendbufjson);
             
             if (this.sendbufjson.length == 0) {
                 //console.log("no more items on json buffer so exiting and not queuing for next");
@@ -1282,7 +1284,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             }
             
             if (this.isSendBufWaitingJson) {
-                console.log("isSendBufWaitingJson is true, so returning.");
+                if (debug) console.log("isSendBufWaitingJson is true, so returning.");
                 //console.groupEnd();
                 return;
             }
@@ -1293,7 +1295,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             if (this.isSingleSelectMode) {
                 if (this.singleSelectPort != null && this.singleSelectPort.length > 1) {
                     
-                    console.log("setting isSendBufWaitingJson to true. sending to port:", this.singleSelectPort);
+                    if (debug) console.log("setting isSendBufWaitingJson to true. sending to port:", this.singleSelectPort);
                     
                     var payload = {
                         P: this.singleSelectPort,
@@ -1324,7 +1326,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         },
         sendViaJson: function(json) {
             //console.group("serial port widget - sendViaJson");
-            console.log("sendViaJson. json:", json);
+            if (debug) console.log("sendViaJson. json:", json);
             
             // we should be passed json that looks like
             //  {"D": "G0 X1\n", "Id":"123"} 
@@ -1342,7 +1344,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // only trigger buffer send if we aren't waiting
                 setTimeout(this.sendBufferedDoNextJson.bind(this), 1);                
             } else {
-                console.error("Sent incorrectly formatted object. You must provide the D parameter in your object to send commands to the serial port via JSON.");
+                if (debug) console.error("Sent incorrectly formatted object. You must provide the D parameter in your object to send commands to the serial port via JSON.");
                 
             }
             
@@ -1371,14 +1373,14 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         },
         onQueuedText: function(data) {
             // we got a queued msg. good. fire off event
-            console.group("serial port widget - onQueuedText");
+            if (debug) console.group("serial port widget - onQueuedText");
             
             // tell the buffer it can send the next command
             this.sendBufferedOnWsRecv();
             
             if (this.versionFloat >= 1.7) {
                 
-                console.log("data:", data);
+                if (debug) console.log("data:", data);
                 //var json = $.parseJSON(data);
                 //console.log("parsed:", json);
                 for (var ctr = 0; ctr < data.Ids.length; ctr++) {
@@ -1392,14 +1394,14 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     chilipeppr.publish("/" + this.id + "/onQueue", payload);                
                 }
             } else {
-                console.log("not running 1.7 or later of SPJS. your version:", this.versionFloat);
+                if (debug) console.log("not running 1.7 or later of SPJS. your version:", this.versionFloat);
             }
-            console.groupEnd();
+            if (debug) console.groupEnd();
         },
         onWriteJson: function(data) {
             // we got a write msg. good. fire off event
             //console.group("onWriteJson");
-            console.log("onWriteJson. data:", data);
+            if (debug) console.log("onWriteJson. data:", data);
             var payload = { Id: data.Id, QCnt: data.QCnt, Port: data.P };
             chilipeppr.publish("/" + this.id + "/onWrite", payload);                
             //console.groupEnd();
@@ -1407,7 +1409,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         onCompleteJson: function(data) {
             // we got a complete msg. good. fire off event
             //console.group("onCompleteJson");
-            console.log("onCompleteJson. data:", data);
+            if (debug) console.log("onCompleteJson. data:", data);
             var payload = { Id: data.Id };
             chilipeppr.publish("/" + this.id + "/onComplete", payload);                
             //console.groupEnd();
@@ -1437,7 +1439,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             */
             // convert JsonTag to a parsed Tag
             if ('JsonTag' in data && data.JsonTag.length > 0) {
-                console.log("About to parse JsonTag:", data.JsonTag, " len of JsonTag:", data.JsonTag.length);
+                if (debug) console.log("About to parse JsonTag:", data.JsonTag, " len of JsonTag:", data.JsonTag.length);
                 data.Tag = JSON.parse(data.JsonTag);
             }
             chilipeppr.publish("/" + this.id + "/onAnnounce", data);                
@@ -1482,7 +1484,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             }
             var that = this;
             $.each(listOfPortsToSendTo, function(i, port) {
-                console.log("sending to port:", port, "msg:", msg);
+                if (debug) console.log("sending to port:", port, "msg:", msg);
                 msg = "send " + port + " " + msg;
                 that.wsSend(msg);
             });
@@ -1579,7 +1581,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         wsWasEverConnected: false,
         wsConnect: function (hostname, onsuccess, onfail) {
             
-            console.log("websocket connect. hostname:", hostname);
+            if (debug) console.log("websocket connect. hostname:", hostname);
             
             // make sure other sockets are disconnected. this was extra important because if you port
             // scanned and got a bunch of server results and clicked a bunch quickly, you'd get multiple
@@ -1599,7 +1601,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 if (!host) {
                     // see if cookie
                     if ($.cookie('lasthost')) {
-                        console.log("there is a previous hostname. use it.", $.cookie('lasthost'));
+                        if (debug) console.log("there is a previous hostname. use it.", $.cookie('lasthost'));
                         host = $.cookie('lasthost');
                     } else {
                         host = "localhost";
@@ -1616,13 +1618,13 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // see if we need wss://
                 if (location.protocol === 'https:') {
                     // page is secure
-                    console.log("this page requires ssl");
+                    if (debug) console.log("this page requires ssl");
                     
                     if (fullurl.match(/wss/i)) {
                         // we're good to try cuz they want wss
-                        console.log("good, user wants wss. host:", fullurl);
+                        if (debug) console.log("good, user wants wss. host:", fullurl);
                     } else {
-                        console.log("the websocket host url is not wss. host:", fullurl);
+                        if (debug) console.log("the websocket host url is not wss. host:", fullurl);
                         if (onfail) onfail.apply(that);
                         return;
                     }
@@ -1630,7 +1632,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 
                 this.conn = new WebSocket(fullurl);
                 this.activehost = host;
-                console.log(this.conn);
+                if (debug) console.log(this.conn);
                 var that = this;
                 that.conn.onopen = function (evt) {
                     that.wsWasEverConnected = true;
@@ -1655,7 +1657,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         
                 };
                 that.conn.onerror = function (evt) {
-                    console.log(evt);
+                    if (debug) console.log(evt);
                     that.publishSysMsg("Serial port ajax error.");
                     if (onfail) onfail.apply(that);
                 };
@@ -1674,7 +1676,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // this method will scan your local subnet
             // for hosts
             if (window["WebSocket"]) {
-                console.log("starting scan of network for serial port servers...");
+                if (debug) console.log("starting scan of network for serial port servers...");
                 var validAddrs = [];
                 var that = this;
                 if (subnet)
@@ -1692,15 +1694,15 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 
                   setTimeout(function() {
                     var conn = new WebSocket("ws://" + subnet + ctr2++ + ":8989/ws");
-                    console.log("attempting to connect to conn url:", conn.url);
+                    if (debug) console.log("attempting to connect to conn url:", conn.url);
                     conn.onopen = function (evt) {
                       scancntsuccess++;
-                      console.log("found a server. ip:", evt.target.url, "evt:", evt, "this:", this);
+                      if (debug) console.log("found a server. ip:", evt.target.url, "evt:", evt, "this:", this);
                       validAddrs.push(evt.target);
-                      console.log("found one:", validAddrs);
+                      if (debug) console.log("found one:", validAddrs);
                       var server = $("<div><a href=\"javascript:\">" + evt.target.url + "</a></div>");
                       server.click(evt.target.url, function(evt) {
-                        console.log("got click. evt:", evt, "data:", evt.data);
+                        if (debug) console.log("got click. evt:", evt, "data:", evt.data);
                         that.wsConnect(evt.data);
                       });
                       $('#com-chilipeppr-widget-serialport-scanresult').append(server);
@@ -1719,7 +1721,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     };
                     conn.onmessage = function (evt) {
                       // see what version and what hostname
-                      console.log("msg from scan of ws:", evt.data, "evt:", evt, "conn:", conn, "conn.url:", conn.url);
+                      if (debug) console.log("msg from scan of ws:", evt.data, "evt:", evt, "conn:", conn, "conn.url:", conn.url);
                       if (evt.data.match(/^{/)) {
                         // it's json
                         var d = $.parseJSON(evt.data);
@@ -1753,18 +1755,18 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
           serverList[key] = val;
           var txt = JSON.stringify(serverList);
           localStorage.setItem("com-chilipeppr-widget-serialport-serverList", txt);
-          console.log("serverList:", serverList, "txt:", txt);
+          if (debug) console.log("serverList:", serverList, "txt:", txt);
           },
         serverListGet: function() {
           var serverList = localStorage.getItem("com-chilipeppr-widget-serialport-serverList");
-          console.log("got localStorage item:", serverList);
+          if (debug) console.log("got localStorage item:", serverList);
           if (serverList) {
           	serverList = JSON.parse(serverList);
             if (!serverList || serverList == null || serverList == "null") serverList = {};
-            console.log("after parse:", serverList);
+            if (debug) console.log("after parse:", serverList);
             
           } else {
-          	console.log("got null so setting empty obj");
+          	if (debug) console.log("got null so setting empty obj");
           	serverList = {};
           }
           return serverList;
@@ -1776,7 +1778,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             var now = Date.now();
             if (this.lastMsg == msg && now - this.lastMsgTime < 20000) {
                 // skip publish
-                console.log("skipping publish. same msg or too fast.");
+                if (debug) console.log("skipping publish. same msg or too fast.");
             } else {
                 chilipeppr.publish("/com-chilipeppr-elem-flashmsg/flashmsg", "Serial Port System Message", msg);
                 this.lastMsg = msg;
@@ -1787,10 +1789,10 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         isInDeDupeMode: false,
         publishMsg: function (msg) {
             if (this.isInDeDupeMode) {
-                console.log("in dedupe mode, so checking. msg:", msg, "lastMsg:", this.deDupeLastMsg);
+                if (debug) console.log("in dedupe mode, so checking. msg:", msg, "lastMsg:", this.deDupeLastMsg);
                 if (this.deDupeLastMsg == msg) {
                     // found dedupe, so don't publish
-                    console.log("dedupe");
+                    if (debug) console.log("dedupe");
                     // this.deDupeLastMsg = msg;
                     return;
                 }
@@ -1863,8 +1865,8 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     this.onFeedRateOverride(data);
                 } else if (data && data.SerialPorts) {
                     // we got a serial port list
-                    console.log("got serial port list");
-                    console.log(data);
+                    if (debug) console.log("got serial port list");
+                    if (debug) console.log(data);
                     this.onPortList(data.SerialPorts);
                 } else if (data && data.Version) {
                     this.onVersion(data.Version);
@@ -1917,7 +1919,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                             
                         }
                     } else {
-                        console.log("have a /recvline to publish, but since in single select mode we don't have a match to the selected port so ignoring.");
+                        if (debug) console.log("have a /recvline to publish, but since in single select mode we don't have a match to the selected port so ignoring.");
                     }
                     
                 }
@@ -1930,16 +1932,16 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         },
         configSendCtr: 0,
         onPortOpen: function(data) {
-            console.group("onPortOpen");
-            console.log("Open a port: ", data, data.Port);
+            if (debug) console.group("onPortOpen");
+            if (debug) console.log("Open a port: ", data, data.Port);
             var portname = data.Port;
             // swap back weird characters
             portname = this.toSafePortName(portname);
-            console.log("got onPortOpen. portname to use for dom lookups:", portname);
+            if (debug) console.log("got onPortOpen. portname to use for dom lookups:", portname);
             $('#' + portname + "Cb").prop('checked', true);
             $('#' + portname + "Row .glyphicon-exclamation-sign").addClass("hidden");
             if (this.isSingleSelectMode) {
-                console.log("got port open but in single select mode.");
+                if (debug) console.log("got port open but in single select mode.");
                 // hilite this port
                 $('.com-chilipeppr-widget-serialport-portlist > tbody > tr').removeClass("success");
                 $('#' + portname + "Row").addClass("success");
@@ -1956,12 +1958,12 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             chilipeppr.publish('/' + this.id + '/onportopen', data);
             
             // if user has a startup script for this port, let's run it here
-            console.log("seeing if we should run a startup script. data:", data);
+            if (debug) console.log("seeing if we should run a startup script. data:", data);
             var portid = data.Port;
             var url = this.conn.url;
             var key = "portid:" + portid + ",url:" + url;
             var script = localStorage.getItem(key, $('#com-chilipeppr-serialport-modalconfig textarea').val());
-            console.log("the script key:", key, "val is:", script);
+            if (debug) console.log("the script key:", key, "val is:", script);
             
             // only send this config info like 1 second later
             var that = this;
@@ -1969,11 +1971,11 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {Id:"startup" +  that.configSendCtr++, D:script});
             }, 3000);
             
-            console.groupEnd();
+            if (debug) console.groupEnd();
 
         },
         onPortClose: function(data) {
-            console.log("Close a port: ", data, data.Port);
+            if (debug) console.log("Close a port: ", data, data.Port);
             var portname = data.Port;
             portname = this.toSafePortName(portname);
             $('#' + portname + "Cb").prop('checked', false);
@@ -1983,7 +1985,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             chilipeppr.publish('/' + this.id + '/onportclose', data);
         },
         onPortOpenFail: function(data) {
-            console.log("Opening a port failed: ", data, data.Port);
+            if (debug) console.log("Opening a port failed: ", data, data.Port);
             var portname = data.Port;
             portname = this.toSafePortName(portname);
             $('#' + portname + "Cb").prop('checked', false);
@@ -2026,7 +2028,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // we'll get json like this so we know our buffer state in spjs
             // {"Cmd":"Queued","QCnt":6,"Type":["Buf","Buf","Buf","Buf","Buf"],...,"Port":"COM22"}
             
-            console.log("got onUpdateQueueCnt. data:", data);
+            if (debug) console.log("got onUpdateQueueCnt. data:", data);
             var port = data.Port;
             if ('P' in data) port = data.P;
             var i = this.toSafePortName(port);
@@ -2148,7 +2150,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         },
         setPortItemsFromMetaData: function(dm /*device meta*/, item /*port*/, portlistIndex) {
             
-            console.log("setting port data from device meta. port:", item, "device meta:", dm);
+            if (debug) console.log("setting port data from device meta. port:", item, "device meta:", dm);
             
             // attach the meta to the item for later reference
             item.meta = dm;
@@ -2182,7 +2184,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // see if this wants us to remove related names/ports
             if ('removeRelatedNames' in dm && dm.removeRelatedNames && 'RelatedNames' in item && item.RelatedNames) {
                 
-                console.log("yes, they want us to remove related ports");
+                if (debug) console.log("yes, they want us to remove related ports");
                 
                 // override the friendly name if there is one
                 if ('name' in dm && dm.name.length > 0) {
@@ -2206,7 +2208,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     for (var portindex in this.portlist) {
                         var port = this.portlist[portindex];
                         if (port.Name == portToDelete) {
-                            console.log("found port to delete. port:", port.Name);
+                            if (debug) console.log("found port to delete. port:", port.Name);
                             port.isDeleted = true;
                             break;
                         }
@@ -2215,11 +2217,11 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             }
             
             this.portlist[portlistIndex] = item;
-            console.log("at finish of setting port info from meta data. item:", this.portlist[portlistIndex]);
+            if (debug) console.log("at finish of setting port info from meta data. item:", this.portlist[portlistIndex]);
         },
         isInitting: true, // the first time thru onPortList assume we are in initting mode because SPJS may already be connected to a port and if so we want to publish signals to other widgets indicating so
         onPortList: function (portlist) {
-            console.group("serial port widget onPortList");
+            if (debug) console.group("serial port widget onPortList");
             //console.log("inside onPortList");
             var html = "";
             var htmlFirst = ""; // show the connected ports first in the HTML
@@ -2238,15 +2240,15 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // get arduino icon
             var arduinoIcon = $('#com-chilipeppr-icon-arduino');
             //arduinoIcon.removeClass("hidden");
-            console.log("arduinoIcon:", arduinoIcon); //, "html:", arduinoIcon.parent.html());
+            if (debug) console.log("arduinoIcon:", arduinoIcon); //, "html:", arduinoIcon.parent.html());
             var found = false;
             if (portlist.length > 0) {
                 $.each(portlist, function (portlistIndex, item) {
-                    console.log("looping thru ports. item:", item);
+                    if (debug) console.log("looping thru ports. item:", item);
                     
                     // see if this is deleted
                     if (item.isDeleted) {
-                        console.log("this port is deleted so skipping");
+                        if (debug) console.log("this port is deleted so skipping");
                         return;
                     }
                     
@@ -2259,7 +2261,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     }
                     var i = item.Name;
                     i = that.toSafePortName(i);
-                    console.log("the port name we will use is:", i);
+                    if (debug) console.log("the port name we will use is:", i);
                     
                     // create available algorithms dropdown
                     var availArgsHtml = "";
@@ -2268,7 +2270,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         availArgsHtml = "<td><select id=\"" + i + "Buffer\" class=\"com-chilipeppr-widget-serialport-buffer\" class=\"form-control\">";
                         //availArgsHtml += "<option></option>"
                         item.AvailableBufferAlgorithms.forEach(function(alg) {
-                            //console.log("algorithm:", alg);
+                            //if (debug) console.log("algorithm:", alg);
                             availArgsHtml += "<option value=\"" + alg + "\">" + alg + "</option>";
                         });
                         availArgsHtml += "</select>" + 
@@ -2278,7 +2280,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     
                     // check if we have meta data for this serial port device
                     // we can do this by checking vid/pid or a regexp on Friendly name
-                    console.log("looking for vid/pid or regexp:", item.UsbVid, item.UsbPid, item.regexp);
+                    if (debug) console.log("looking for vid/pid or regexp:", item.UsbVid, item.UsbPid, item.regexp);
                     
                     var foundMeta = false;
                     
@@ -2297,7 +2299,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                             // see if device meta even has vid/pid defined and if they match
                             if ('UsbVid' in item && cvp.vid.length > 0 && cvp.pid.length > 0 && item.UsbVid.toLowerCase() == cvp.vid.toLowerCase() && item.UsbPid.toLowerCase() == cvp.pid.toLowerCase() ) {
                                 
-                                console.log("we have a match on vid/pid");
+                                if (debug) console.log("we have a match on vid/pid");
                                 isMatchOnVidPid = true;
                                 foundMeta = true;
                                 item.devicekey = key;
@@ -2308,17 +2310,17 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                         }
                         
                         if (isMatchOnVidPid) {
-                            console.log("since found vid/pid, break the for loop that is looping on meta data, cuz we're done");
+                            if (debug) console.log("since found vid/pid, break the for loop that is looping on meta data, cuz we're done");
                             break;
                         }
                         
                         // if no match on vid/pid, see if regexp match
                         if ('regexp' in dm && dm.regexp) {
                             // there is a regexp to test on, give it a try
-                            console.log("looking for regexp:", dm.regexp);
+                            if (debug) console.log("looking for regexp:", dm.regexp);
                             if (item.Friendly.match(dm.regexp)) {
                                 // we got a match, awesome
-                                console.log("we got a match on regexp on friendly");
+                                if (debug) console.log("we got a match on regexp on friendly");
                                 
                                 foundMeta = true;
                                 item.devicekey = key;
@@ -2331,11 +2333,11 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     // see if we had meta data
                     if (foundMeta) {
                         // good, we had meta data
-                        console.log("we had a match on meta data for this port, so known device");
+                        if (debug) console.log("we had a match on meta data for this port, so known device");
                     } else {
                         // we did not have meta data, that means an unknown,
                         // so we have to show buffer encouragement
-                        console.log("we did not have meta data for this port.");
+                        if (debug) console.log("we did not have meta data for this port.");
                         areAllDevicesKnown = false;
                     }
                     
@@ -2347,11 +2349,11 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     else
                         imgTag = " style=\"width:0;\" ";
 
-                    console.error("item friendly: " + String(item.Friendly));
+                    if (debug) console.error("item friendly: " + String(item.Friendly));
                     if (String(item.Friendly).indexOf("K-PROX") !== -1)
                     {
                         found = true;
-                        console.log("found serial");
+                        if (debug) console.log("found serial");
                         var row = "<tr id=\"" + i + "Row\" class=\"" + rowClass + "\"><td  style=\"cursor:pointer;\">" +
                             "<input id=\"" + i + "Cb\" type=\"checkbox\" style=\"cursor:pointer;\"/> <span class=\"glyphicon glyphicon-exclamation-sign text-danger hidden\" data-toggle=\"tooltip\" data-placement=\"auto\"></span>" +
                             "</td><td id=\"" + i + "Img\" class=\"deviceImgTd\" style=\"cursor:pointer;\"><img class=\"deviceimg\" " + imgTag + " /></td>" +
@@ -2390,7 +2392,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             html = htmlFirst + html;
             $('.table.com-chilipeppr-widget-serialport-portlist tbody').html(html);
             
-            console.log("about to do baud/buffer override for isopen, cookie, meta, etc");
+            if (debug) console.log("about to do baud/buffer override for isopen, cookie, meta, etc");
             $.each(portlist, function (i, item) {
                 // now set the values from the cookie so we make their life easier
                 var cookie = that.serialGetCookie(item.Name);
@@ -2457,7 +2459,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                     //debugger;
                     // see if open as a true buffer and then add a buffer bar
                     if (that.versionFloat >= 1.4) {
-                        console.log("adding buffer bar");
+                        if (debug) console.log("adding buffer bar");
                         $('#' + i + "Buffer").parent().append(
                             '<div class="progress hidden com-chilipeppr-widget-serialport-progbar">' +
                             '<div id="' + i + 'BufferProgBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10" style="width: 80%;">' +
@@ -2482,7 +2484,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // set default buffer based on what was set (if anything) in this.bufferType
                 // but only do it if item is not open and there's no cookie
                 if (item.IsOpen == false && cookie && !('buffer' in cookie) && that.buffertype != null) {
-                    console.log("setting default buffer type cuz item not open, no cookie, and is a default buf type. item:", item);
+                    if (debug) console.log("setting default buffer type cuz item not open, no cookie, and is a default buf type. item:", item);
                     $('#' + i + "Buffer").val(that.buffertype);
                 }
 
@@ -2504,15 +2506,15 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // set isInitting to false, that means only the 1st time
             // thru this method will we do any isInitting code
             if (that.isInitting) {
-                console.log("setting isInitting to false so don't run init code again on port list");
+                if (debug) console.log("setting isInitting to false so don't run init code again on port list");
                 that.isInitting = false;
             }
             
             // now do last check on whether to hide buffer encouragement
-            console.log("about to check if we need to hide buffer encouragement. areAllDevicesKnown:", areAllDevicesKnown);
+            if (debug) console.log("about to check if we need to hide buffer encouragement. areAllDevicesKnown:", areAllDevicesKnown);
             if (areAllDevicesKnown == true) {
                 // we can hide buffer encouragement
-                console.log("cuz all devices are known, we can safely hide");
+                if (debug) console.log("cuz all devices are known, we can safely hide");
                 this.hideBufferEncouragement();
             }
             
@@ -2521,7 +2523,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             // publish the port list for other listeners
             chilipeppr.publish("/com-chilipeppr-widget-serialport/listAfterMetaDataAdded", portlist);
 
-            console.groupEnd();
+            if (debug) console.groupEnd();
             
         },
         showAllPopovers: function() {
@@ -2535,7 +2537,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             $('.com-chilipeppr-widget-serialport .btn').popover('hide');
         },
         onPortSetDefaultClicked: function(evt) {
-            console.log("set default btn clicked for evt.data:", evt.data, "this.conn:", this.conn);
+            if (debug) console.log("set default btn clicked for evt.data:", evt.data, "this.conn:", this.conn);
         
             // hilite this port
             var data = evt.data;
@@ -2551,7 +2553,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             this.isSendBufWaitingJson = false;
         },
         onPortProgramClicked: function(evt) {
-            console.log("programmer btn got clicked for evt.data:", evt.data, "this.conn:", this.conn);
+            if (debug) console.log("programmer btn got clicked for evt.data:", evt.data, "this.conn:", this.conn);
             this.hideAllPopovers();
             var port = evt.data.port.Friendly;
             var portid = evt.data.port.Name;
@@ -2570,7 +2572,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             );
         },
         onPortConfigClicked: function(evt) {
-            console.log("config got clicked for evt.data:", evt.data, "this.conn:", this.conn);
+            if (debug) console.log("config got clicked for evt.data:", evt.data, "this.conn:", this.conn);
             this.hideAllPopovers();
             var port = evt.data.port.Friendly;
             var portid = evt.data.port.Name;
@@ -2595,7 +2597,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             this.checkLogin();
         },
         onPortConfigModalSave: function(evt) {
-            console.log("got save on port config modal. evt.data:", evt.data);
+            if (debug) console.log("got save on port config modal. evt.data:", evt.data);
             
             // save to local config
             var portid = evt.data.port.Name;
@@ -2604,12 +2606,12 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             var val = $('#com-chilipeppr-serialport-modalconfig textarea').val();
             // ensure newline at end
             if (val.match(/\n$/)) {
-                console.log("there was newline at end. good.");
+                if (debug) console.log("there was newline at end. good.");
             } else {
                 val += "\n";
-                console.log("there was no newline, so added one.");
+                if (debug) console.log("there was no newline, so added one.");
             }
-            console.log("saving config for port key:", key, "val:", val, {key:key, val:val});
+            if (debug) console.log("saving config for port key:", key, "val:", val, {key:key, val:val});
             localStorage.setItem(key, val);
             $('#com-chilipeppr-serialport-modalconfig').modal('hide');
             
@@ -2629,17 +2631,17 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             var cpvalstr = JSON.stringify(cpval);
             var amp = encodeURIComponent("&");
             cpvalstr = cpvalstr.replace(/&/, amp);
-            console.log("about to save to chilipeppr cloud. cpkey:", cpkey, "cpval:", cpval, "cpvalstr:", cpvalstr);
+            if (debug) console.log("about to save to chilipeppr cloud. cpkey:", cpkey, "cpval:", cpval, "cpvalstr:", cpvalstr);
             var url = "http://www.chilipeppr.com/dataput?key=" + cpkey + "&val=" + cpvalstr + "&callback=?";
             // url = encodeURI(url);
-            console.log("len of url:", url.length, "url:", url);
+            if (debug) console.log("len of url:", url.length, "url:", url);
             var jqxhr = $.ajax({
               url: url,
               dataType: 'jsonp',
             //   jsonpCallback: 'serialport_dataputCallback',
               cache: false,
             }).done(function(data) {
-              console.log(data);
+              if (debug) console.log(data);
             });
             
         },
@@ -2652,9 +2654,9 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
               jsonpCallback: 'headerpanel_dataloginCallback',
               cache: true,
             }).done(function(data) {
-              console.log(data);
+              if (debug) console.log(data);
               if (data.CurrentUser != undefined && data.CurrentUser != null) {
-                console.log("user logged in ", data.CurrentUser);
+                if (debug) console.log("user logged in ", data.CurrentUser);
                 that.currentUser = data.CurrentUser;
                 $('#com-chilipeppr-serialport-modalconfig .alert-warning .msg').text("User logged in as " + that.currentUser.Email + ". Saved config scripts available in menu to right.");
                 // $('#com-chilipeppr-hdr-login').text(data.CurrentUser.Email);
@@ -2664,7 +2666,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // $('#com-chilipeppr-hdr-login').prop('href', data.LogoutUrl);
                 that.getUserDataKeysFromChiliPepprStorage();
               } else {
-                console.log("user NOT logged in");
+                if (debug) console.log("user NOT logged in");
                 $('#com-chilipeppr-serialport-modalconfig .alert-warning .msg').text("User not logged in so can't show saved configs or save your new one.");
                 // $('#com-chilipeppr-hdr-login').text("Login");
                 // $('#com-chilipeppr-hdr-dd-login').removeClass("hidden");
@@ -2676,12 +2678,12 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
               }
             })
             .fail(function() {
-              console.warn("Failed to make the ajax call to check ChiliPeppr login status");
+              if (debug) console.warn("Failed to make the ajax call to check ChiliPeppr login status");
             })
         },
         getUserDataKeysFromChiliPepprStorage: function() {
 
-            console.log("Doing getUserDataKeysFromChiliPepprStorage");
+            if (debug) console.log("Doing getUserDataKeysFromChiliPepprStorage");
             
             // this queries chilipeppr's storage facility to see what
             // keys are available for the user
@@ -2713,7 +2715,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 var keys = [];
                 var keylist = ""; //"<ol>";
                 data.forEach(function(item) {
-                    console.log("item:", item);
+                    if (debug) console.log("item:", item);
                     if (item.Name && item.Name.match(/com-chilipeppr-serialport-script-/)) {
                         // we have a serial port config file
                         keys.push({
@@ -2744,10 +2746,10 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                             url: "http://www.chilipeppr.com/dataget?key=" + item.Name + "&callback=?",
                         })
                         .done(function(data) {
-                            console.log("got data back from dataget call. data:", data);
+                            if (debug) console.log("got data back from dataget call. data:", data);
                             if ("Value" in data) {
                                 var meta = JSON.parse(data.Value);
-                                console.log("meta:", meta);
+                                if (debug) console.log("meta:", meta);
                                 var table = "<table class=\"table table-striped table-condensed\" style=\"font-size:11px;margin-bottom: 0;\"><tr>";
                                 if ("port" in meta) {
                                     if ("img" in meta.port) table += "<td rowspan=\"2\"><img style=\"width:50px;xpadding-right:10px;\" src=\"" + meta.port.img + "\" /></td>";
@@ -2778,18 +2780,18 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             //   keylist += "</ol>";
             
             //   $('#com-chilipeppr-serialport-modalconfig .dropdown-menu').html(keylist);
-            console.log("added keylist:", keylist);
+            if (debug) console.log("added keylist:", keylist);
             
             });
         },
         onCloudScriptFileClicked: function(evt) {
             // put the script into the textarea
-            console.log("being asked to insert saved cloud script. evt:", evt);
+            if (debug) console.log("being asked to insert saved cloud script. evt:", evt);
             
             $('#com-chilipeppr-serialport-modalconfig textarea').val(evt.data.meta.script);
         },
         onPortFriendlyClicked: function(evt) {
-            console.log("got onPortFriendlyClicked: ", evt);
+            if (debug) console.log("got onPortFriendlyClicked: ", evt);
             var item = evt.data.port;
             var that = evt.data.that;
             var isSelected = false;
@@ -2805,10 +2807,10 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
             that.onPortCbClicked(evt);
         },
         onPortCbClicked: function(evt) {
-            console.log("got onPortClicked: ", evt);
+            if (debug) console.log("got onPortClicked: ", evt);
             var item = evt.data.port;
             var that = evt.data.that;
-            console.log(item);
+            if (debug) console.log(item);
             // see if selected/unselected to know if close/open
             var isSelected = false;
             var i = that.toSafePortName(item.Name);
@@ -2820,7 +2822,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // get baud rate picked
                // var baud = $('#' + i + "Baud").val();
                 var baud = 115200;
-                console.error("BAUD: " + baud);
+                if (debug) console.error("BAUD: " + baud);
                 var buffer = $('#' + i + "Buffer").val();
                 that.serialConnect(item.Name, baud, buffer);
                 //that.publishSysMsg("Serial port " + port.Friendly + " opened with baud rate " + baud);
@@ -2851,7 +2853,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
         bufferAlgorithms: null,
         getBufferAlgorithms: function() {
             if (this.bufferAlgorithms == null) {
-                console.log("Need to load algorithms from serial port json server");
+                if (debug) console.log("Need to load algorithms from serial port json server");
                 this.wsSend("bufferalgorithms");
                 
             }
