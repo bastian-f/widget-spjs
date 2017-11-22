@@ -3,12 +3,7 @@
 
 // ChiliPeppr Widget/Element Javascript
 
-//var BAUDRATE = 115200;
-
-
-//var console = {};
-//console.log = function(){};
-//console.error = function(){};
+var BAUDRATE = 115200;
 
 
 requirejs.config({
@@ -2561,7 +2556,7 @@ chilipeppr.publish("/com-chilipeppr-widget-serialport/send", "G1 X10 F500\\n");
                 // open the port
                 // get baud rate picked
                // var baud = $('#' + i + "Baud").val();
-                var baud = 115200;
+                var baud = BAUDRATE;
                 console.error("BAUD: " + baud);
                 var buffer = $('#' + i + "Buffer").val();
                 that.serialConnect(item.Name, baud, buffer);
