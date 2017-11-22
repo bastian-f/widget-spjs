@@ -6,8 +6,8 @@
 //var BAUDRATE = 115200;
 
 
-var console = {};
-console.log = function(){};
+//var console = {};
+//console.log = function(){};
 //console.error = function(){};
 
 
