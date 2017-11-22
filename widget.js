@@ -8,8 +8,7 @@
 
 var console = {};
 console.log = function(){};
-console.error = function(){};
-window.console = console;
+//console.error = function(){};
 
 
 requirejs.config({
